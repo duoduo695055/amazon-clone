@@ -26,13 +26,13 @@ function Payment() {
 
     const [clientSecret,setClientSecret]=useState(true);
     
-    useEffect(()=>{
+    useEffect(() => {
         //generate the special stripe secret which allows us to charge a customer
         const getClientSecret =async() =>{
             const response= await axios({
                 method:'post',
                 url:`/payments/create?total=${getBasketTotal(basket) *100}`
-            })
+            });
             setClientSecret(response.data.clientSecret)
 
         }
@@ -40,10 +40,13 @@ function Payment() {
         getClientSecret();
     },[basket])
 
+    console.log('THE SECRET IS>>>', clientSecret)
+
     const handleSubmit=async(event)=>{
         //do all the fancy stripe stuff 
         event.preventDefault();
         setProcessing(true);
+
         const payload=await stripe.confirmCardPayment(clientSecret,{
             payment_method:{
                 card: elements.getElement(CardElement)
@@ -55,7 +58,7 @@ function Payment() {
                 setError(null)
                 setProcessing(false)
 
-                history.replaceState('/orders')
+                history.replace('/orders')
 
 
             })
