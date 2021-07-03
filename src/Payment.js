@@ -8,6 +8,7 @@ import {CardElement, useStripe,useElements} from "@stripe/react-stripe-js";
 import CurrencyFormat from "react-currency-format";
 import { getBasketTotal } from "./reducer";
 import axios from "./axios";
+import {db} from "./firebase";
 
 
 
@@ -18,12 +19,10 @@ function Payment() {
     const stripe=useStripe();
     const elements=useElements();
 
+    const [succeeded, setSucceeded]=useState(false);
+    const [processing, setProcessing]=useState("");
     const [error,setError] =useState(null);
     const [disabled,setDisabled]=useState(true);
-
-    const [processing, setProcessing]=useState("");
-    const [succeeded, setSucceeded]=useState(false);
-
     const [clientSecret,setClientSecret]=useState(true);
     
     useEffect(() => {
@@ -41,6 +40,7 @@ function Payment() {
     },[basket])
 
     console.log('THE SECRET IS>>>', clientSecret)
+    
 
     const handleSubmit=async(event)=>{
         //do all the fancy stripe stuff 
@@ -53,10 +53,22 @@ function Payment() {
             }
         }).then(({paymentIntent}) =>{
 
+                console.log('The PaymentIntent is>>>', {paymentIntent})
+                db.collection('users').doc(user?.uid).collection('orders').doc(paymentIntent.id)
+                .set({
+                basket:basket,
+                amount:paymentIntent.amount,
+                created:paymentIntent.created
+                })
+
                 //PaymentIntent =payment confirmation 
                 setSucceeded(true);
                 setError(null)
                 setProcessing(false)
+
+                dispatch({
+                    type:'EMPTY_BASKET'
+                })
 
                 history.replace('/orders')
 

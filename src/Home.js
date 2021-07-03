@@ -14,7 +14,7 @@ function Home() {
           <Product
             id="12345"
             title="CEWOR 24 Heads Artificial Rose Flowers"
-            price={12.99}
+            price={1}
             image="https://m.media-amazon.com/images/I/51C4SVIUmZL._AC_SY200_.jpg"
             rating={5}
           />
