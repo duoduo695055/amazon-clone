@@ -43,15 +43,7 @@ function Header() {
             <span className="header__optionLineTwo">& Orders</span>
           </div>
         </Link>
-        
-        <div className="header_option">
-          <span className="header_optionlineone">Check</span>
-          <span className="header_optionlinetwo">Examples</span>
-        </div>
-        <div className="header_option">
-          <span className="header_optionlineone">Your</span>
-          <span className="header_optionlinetwo">Personality</span>
-        </div>
+     
         <Link to="/checkout">
           <div className="header_optionbasket">
             <ShoppingBasketIcon></ShoppingBasketIcon>
