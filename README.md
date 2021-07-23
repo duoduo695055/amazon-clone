@@ -1,3 +1,8 @@
+# TEST Account:
+Please use this account to test functions:
+Email: panduo920716@126.com
+Password:1234567
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
